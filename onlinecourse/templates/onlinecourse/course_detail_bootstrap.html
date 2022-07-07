@@ -61,7 +61,7 @@
             <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#exam">Start Exam</button>
 
             <div id="exam" class="collapse">
-                <form id="questionform" action="point to a submit view" method="post">
+                <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
                     {% csrf_token %}
                     {% for question in course.question_set.all %}
                         <div class="card mt-1">
@@ -71,7 +71,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                     <input type="checkbox" name="choice_{{choice.id}}" 
-                                            id="{{choide.id}}" value="{{choide.id}}"
+                                            id="{{choide.id}}" value="{{choice.id}}"
                                             class="form-check-input"> {{choice.content}}
                                     </label>
                                 </div>
