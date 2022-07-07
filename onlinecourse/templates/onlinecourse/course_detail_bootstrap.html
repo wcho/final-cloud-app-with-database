@@ -55,13 +55,33 @@
             https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->
 
             <!--
-
             A collapse example here:
-            <div id="exam" class="collapse">
-                Click to expand elements within the collapse div
-                </div>
-
             -->
+            {% if user.is_authenticated %}
+            <button type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target="#exam">Start Exam</button>
+
+            <div id="exam" class="collapse">
+                <form id="questionform" action="point to a submit view" method="post">
+                    {% csrf_token %}
+                    {% for question in course.question_set.all %}
+                        <div class="card mt-1">
+                            <div class="card-header"><h5>{{question.text}}</h5></div>
+                            <div class="card-body form-group">
+                                {% for choice in question.choice_set.all %}
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    <input type="checkbox" name="choice_{{choice.id}}" 
+                                            id="{{choide.id}}" value="{{choide.id}}"
+                                            class="form-check-input"> {{choice.content}}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                <input class="btn btn-success btn-block" type="submit" value="Submit">
+            </form>
+            </div>
 
             <!-- <HINT> If user is authenticated, show course exam with a list of question -->
 
@@ -75,8 +95,8 @@
             <input type="check" name="choice_{{choice.id}}" id="{{choice.id}}" ...>
             -->
 
-            <!-- A choice submission form example
-            <form id="questionform" action="point to a submit view" method="post">
+            <!-- A choice submission form example -->
+            <!-- <form id="questionform" action="point to a submit view" method="post">
                         ... for each question in the course ...
                         <div class="card mt-1">
                             <div class="card-header"><h5>{{ question.question_text}}</h5></div>
@@ -97,6 +117,8 @@
 
             <!--Check here to see more details Bootstrap checkbox
              https://www.w3schools.com/bootstrap4/bootstrap_forms_inputs.asp-->
+            
+            {% endif %}
     </div>
 </body>
 </html>
